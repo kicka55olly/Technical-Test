@@ -1,22 +1,24 @@
-function f1() {
-  var p = new Date();
-  var q = new Date("2025-12-25");
+const currentDate = new Date();
 
-  var variable = Math.round((q - p) / (1000 * 60 * 60 * 24));
+function main() {
+	const currentYear = currentDate.getFullYear();
 
-  var variable2 = document.getElementById("my-element");
-  variable2.innerText = variable;
+	const christmasThisYear = new Date(`${currentYear}-12-25`);
+	const nextChristmasDate = currentDate > christmasThisYear
+		? new Date(`${currentYear + 1}-12-25`) : christmasThisYear;
+
+	const nextNewYearDate = new Date(`${currentYear + 1}-01-01`);
+
+	updateCountdown(nextChristmasDate, "days-until-christmas");
+	updateCountdown(nextNewYearDate, "days-until-new-year");
 }
 
-function f2() {
-  var p = new Date();
-  var q = new Date("2026-01-01");
+function updateCountdown(targetDate, elementId) {
+  const millisecondsPerDay = 1000 * 60 * 60 * 24;
+  const daysUntilTarget = Math.round((targetDate - currentDate) / millisecondsPerDay);
 
-  var variable = Math.round((q - p) / (1000 * 60 * 60 * 24));
-
-  var variable2 = document.getElementById("my-element2");
-  variable2.innerText = variable;
+  const element = document.getElementById(elementId);
+  if (element) element.innerText = daysUntilTarget;
 }
 
-f1();
-f2();
+main();
