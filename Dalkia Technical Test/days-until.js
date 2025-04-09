@@ -1,14 +1,14 @@
 const currentDate = new Date();
 
-function getNextChristmasDate(fromDate) {
-  const currentYear = fromDate.getFullYear();
-  const christmasThisYear = new Date(`${currentYear}-12-25`);
-  return fromDate > christmasThisYear ? new Date(`${currentYear + 1}-12-25`) : christmasThisYear;
+function getNextChristmasDate() {
+	const currentYear = currentDate.getFullYear();
+	const christmasThisYear = new Date(`${currentYear}-12-25`);
+	return currentDate > christmasThisYear ? new Date(`${currentYear + 1}-12-25`) : christmasThisYear;
 }
 
-function getNextNewYearDate(fromDate) {
-  const currentYear = fromDate.getFullYear();
-  return new Date(`${currentYear + 1}-01-01`);
+function getNextNewYearDate() {
+	const currentYear = currentDate.getFullYear();
+	return new Date(`${currentYear + 1}-01-01`);
 }
 
 function updateCountdown(targetDate, elementId) {
@@ -17,17 +17,24 @@ function updateCountdown(targetDate, elementId) {
 	if (element) element.innerText = daysUntilTarget;
 }
 
-function calculateDaysUntil(targetDate, fromDate) {
+function calculateDaysUntil(targetDate) {
 	const millisecondsPerDay = 1000 * 60 * 60 * 24;
-	return Math.round((targetDate - fromDate) / millisecondsPerDay);
+	return Math.round((targetDate - currentDate) / millisecondsPerDay);
 }
 
-function main() {
-  const nextChristmasDate = getNextChristmasDate(currentDate);
-  const nextNewYearDate = getNextNewYearDate(currentDate);
-  
-  updateCountdown(nextChristmasDate, "days-until-christmas");
-  updateCountdown(nextNewYearDate, "days-until-new-year");
+function updateChristmasCountdown() {
+	const nextChristmasDate = getNextChristmasDate();
+	updateCountdown(nextChristmasDate, "days-until-christmas");
 }
 
-main();
+function updateNewYearCountdown() {
+	const nextNewYearDate = getNextNewYearDate();
+	updateCountdown(nextNewYearDate, "days-until-new-year");
+}
+
+function init() {
+	updateChristmasCountdown();
+	updateNewYearCountdown();
+}
+
+init();
